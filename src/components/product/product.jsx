@@ -1,10 +1,10 @@
 import React, { Component, createRef } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { CartContext } from '../../context/cartContext'
 import { DataContext } from '../../context/dataContext'
 import { ProductContext } from '../../context/productContext'
 import { ProdCon } from './productStyle'
-
+import { nanoid } from "nanoid"
 class Product extends Component {
     constructor(props) {
         super(props)
@@ -18,6 +18,7 @@ class Product extends Component {
                 <ProductContext>{(productContext) => {
                     const { setData } = cartContext
                     const { productId, setSize, setColor } = productContext
+                    const { currency } = this.context
                     const product = this.context.data
                         .filter(category => category.name == "all")[0].products
                         .filter(product => product.id === productId)[0]
@@ -39,7 +40,7 @@ class Product extends Component {
                                 setData({ productId })
                             }
                         } */}
-                        setData({ gallary: product.gallery, name: product.name, brand: product.brand, sizes: product.attributes, color: productContext.color, size: productContext.size, amount: 1 })
+                        setData({ prices: product.prices, gallary: product.gallery, name: product.name, brand: product.brand, sizes: product.attributes, color: productContext.color, size: productContext.size, amount: 1 })
                         console.log(cartContext)
                     }
                     return (
@@ -48,10 +49,10 @@ class Product extends Component {
                             <div style={{ display: "flex", gap: "50px" }}>
 
                                 <div className='smallImages'>
-                                    <img className='smallImage' src={product.gallery[1]} />
-                                    <img className='smallImage' src={product.gallery[2]} />
-                                    <img className='smallImage' src={product.gallery[3]} />
-                                    <img className='smallImage' src={product.gallery[4]} />
+                                    <img className='smallImage' src={product.gallery[1]} alt="image" />
+                                    <img className='smallImage' src={product.gallery[2]} alt="image" />
+                                    <img className='smallImage' src={product.gallery[3]} alt="image" />
+                                    <img className='smallImage' src={product.gallery[4]} alt="image" />
                                 </div>
                                 <div className='bigImage'>
                                     <img className='bigImage' src={product.gallery[0]} />
@@ -65,7 +66,7 @@ class Product extends Component {
                                         <p className='size-text'>SIZE:</p>
                                         <div className='sizes-row'>
                                             {size.map(item => (
-                                                <div style={{ cursor: "pointer" }} className="size-div" key={item} onClick={() => handleSize(item)}>
+                                                <div style={{ cursor: "pointer" }} className="size-div" key={nanoid()} onClick={() => handleSize(item)}>
                                                     <p style={{ margin: "0", width: "fit-content", }}>{item}</p>
                                                 </div>
                                             ))}
@@ -78,7 +79,7 @@ class Product extends Component {
                                         <p className='size-text'>COLOR:</p>
                                         <div className='colors-row'>
                                             {size.map(item => (
-                                                <div style={{ backgroundColor: `${item}`, cursor: "pointer" }} className='color-div' key={item} onClick={() => handleColor(item)}>
+                                                <div style={{ backgroundColor: `${item}`, cursor: "pointer" }} className='color-div' key={nanoid} onClick={() => handleColor(item)}>
                                                 </div>
                                             ))}
                                         </div>
@@ -87,9 +88,16 @@ class Product extends Component {
                                 }
                                 <div className='price'>
                                     <p className='size-text'>PRICE:</p>
-                                    <p className='price-amount'>$50000</p>
+                                    <p className='price-amount'>{product.prices.map(price => {
+                                        if (price.currency.label === currency) {
+                                            return (
+                                                price.currency.symbol + price.amount
+                                            )
+                                        }
+                                    })}
+                                    </p>
                                 </div>
-                                <Link to="/cart" className='add-to-cart'><p className='add-text' onClick={handleCart}>ADD TO CART</p></Link>
+                                <Link to="/cart" className='add-to-cart' onClick={handleCart}><p className='add-text' >ADD TO CART</p></Link>
                                 <div className='description-text'> {product.description}</div>
                             </div>
                         </ProdCon >

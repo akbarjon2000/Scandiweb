@@ -22,6 +22,7 @@ export const Container = styled.div`
 
 export const Product = styled.div`
         /* text-decoration:none; */
+        position:relative;
         width:366px;
         height:444px;
         display:flex;
@@ -41,6 +42,16 @@ export const Product = styled.div`
     width:330px;
     height:fit-content;
     margin-top:24px;
+}
+.out-of-stock{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    color: #8D8F9A;
+    position:absolute;
+    top:151px;
+    left:91px;
 }
 
 `

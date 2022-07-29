@@ -19,11 +19,15 @@ export default class DataContextProvider extends Component {
         super(props)
         this.state = {
             data: [],
+            currency: "USD"
             // productId: 'huarache-x-stussy-le',
             // size: null,
             // color: null
 
         }
+    }
+    changeCurrency = (cur) => {
+        this.setState(prevstate => ({ ...prevstate, currency: cur }))
     }
     componentDidMount() {
         client
@@ -44,12 +48,14 @@ export default class DataContextProvider extends Component {
     render() {
         const {
             data,
+            currency
             // productId
         } = this.state
+        const { changeCurrency } = this
         // const { setProduct } = this
         // console.log(data)
         return (
-            <DataContext.Provider value={{ data }}>{this.props.children}</DataContext.Provider>
+            <DataContext.Provider value={{ data, currency, changeCurrency }}>{this.props.children}</DataContext.Provider>
         )
     }
 }

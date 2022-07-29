@@ -110,15 +110,15 @@ width:100%;
     } 
     .active-color-div{
         border: 1px solid #5ECE7B ;
-        width:32px;
-        height:32px;
+        width:24px;
+        height:24px;
         padding:3px;
         /* box-sizing:border-box; */
     }
     .color-div{
         cursor:pointer;
-        width:32px;
-        height:32px;
+        width:24px;
+        height:24px;
         
     } 
     .image-container{
