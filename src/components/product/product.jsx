@@ -98,7 +98,7 @@ class Product extends Component {
                                     </p>
                                 </div>
                                 <Link to="/cart" className='add-to-cart' onClick={handleCart}><p className='add-text' >ADD TO CART</p></Link>
-                                <div className='description-text'> {product.description}</div>
+                                <div className='description-text'> {product.description.slice(0, 150)}</div>
                             </div>
                         </ProdCon >
                     )
